@@ -15,14 +15,15 @@ function Adjectives() {
 
   const [adjectives, setAdjectives] = useState([]);
   const [newAdjective, setNewAdjective] = useState(state);
-    
+  const [successMessage, setSuccessMessage] = useState(""); 
+
   useEffect(() => {
     getAdjectives();
   }, []);
   
   const getAdjectives = async () => {
     try {
-      const response = await fetch("/api/users/adjectives");
+      const response = await fetch("/api/adjectives");
       const data = await response.json();
       if(!response.ok) throw new Error(data.message);
       setAdjectives(data);
@@ -34,8 +35,13 @@ function Adjectives() {
     
   async function addAdjective(e) {
     e.preventDefault();
+    const isAdjectiveExisting = adjectives.some((adjective) => adjective.adjective.toLowerCase() === newAdjective.adjective.toLowerCase());
+    if (isAdjectiveExisting) {
+    alert("This adjective already exists!");
+    return;
+    }
     try {
-      const response = await fetch("/api/users/adjectives", {
+      const response = await fetch("/api/adjectives", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,6 +52,8 @@ function Adjectives() {
       console.log(data);
       if (!response.ok) throw new Error(data.message);
       getAdjectives();
+      setSuccessMessage("Adjective added successfully!");
+      setNewAdjective(state);
     } catch (err) {
       console.log(err);
     }
@@ -67,9 +75,9 @@ function Adjectives() {
           <label> Enter your new adjective: 
             <input 
             type="text"
-            name="verb"
-            placeholder="verb"
-            value={newAdjective.verb}
+            name="adjective"
+            placeholder="adjective"
+            value={newAdjective.adjective}
             onChange={handleInputChange}
             />
           </label>
@@ -128,9 +136,15 @@ function Adjectives() {
           <button >Submit</button>
         </form>
       </div>
+      {successMessage && (
+        <div className="success-message">
+          {successMessage}
+        </div>
+      )}
     </div>
  )
 }
+      
           
           
 

@@ -4,7 +4,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var nounsRouter = require('./routes/nouns');
+var adjectivesRouter = require('./routes/adjectives');
+var verbsRouter = require('./routes/verbs');
+var expressionsRouter = require('./routes/expressions');
 const cors = require('cors'); // add at the top
 var app = express();
 
@@ -15,7 +18,10 @@ app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/', nounsRouter);
+app.use('/api/', adjectivesRouter);
+app.use('/api/', verbsRouter);
+app.use('/api/', expressionsRouter);
 app.use(cors()); // add after 'app' is created
 
 

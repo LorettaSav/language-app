@@ -9,7 +9,7 @@ function Verbs() {
     meaning1: "",
     meaning2: "",
     meaning3: "",
-    case: "",
+    cases: "",
     preposition: "",
     example1: "",
     example2: "",
@@ -17,8 +17,8 @@ function Verbs() {
   }
 
   const [verbs, setVerbs] = useState([]);
-  const [newVerb, setNewVerb] = useState([]);
-    
+  const [newVerb, setNewVerb] = useState(state);
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     getVerbs();
@@ -26,7 +26,7 @@ function Verbs() {
 
   const getVerbs = async () => {
     try {
-      const response = await fetch("/api/users/Verbs");
+      const response = await fetch("/api/verbs");
       const data = await response.json();
       if(!response.ok) throw new Error(data.message);
       setVerbs(data);
@@ -37,8 +37,13 @@ function Verbs() {
 
   async function addVerb(e) {
     e.preventDefault();
+    const isVerbExisting = verbs.some((verb) => verb.verb.toLowerCase() === newVerb.verb.toLowerCase());
+    if (isVerbExisting) {
+    alert("This verb already exists!");
+    return;
+    }
     try {
-      const response = await fetch("/api/users/Verbs", {
+      const response = await fetch("/api/verbs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,6 +54,8 @@ function Verbs() {
       console.log(data);
       if (!response.ok) throw new Error(data.message);
       getVerbs();
+      setSuccessMessage("Verb was added successfully!");
+      setNewVerb(state);
     } catch (err) {
       console.log(err);
     }
@@ -111,7 +118,16 @@ function Verbs() {
             onChange={handleInputChange}
             />
           </label>
-          <label> Do you have one or more examples of how to use this noun?
+          <label> What is the case of your verb?
+            <input 
+            type="text" 
+            name="cases"
+            placeholder="case"
+            value={newVerb.cases}
+            onChange={handleInputChange}
+            />
+          </label>
+          <label> Do you have one or more examples of how to use this verb?
             <input 
             className="examples-input"
             type="text" 
@@ -140,6 +156,11 @@ function Verbs() {
           <button >Submit</button>
         </form>
       </div>
+      {successMessage && (
+        <div className="success-message">
+          {successMessage}
+        </div>
+      )}
     </div>
  )
 }

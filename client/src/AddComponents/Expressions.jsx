@@ -16,14 +16,15 @@ function Expressions() {
 
   const [expressions, setExpressions] = useState([]);
   const [newExpression, setNewExpression] = useState(state);
-   
+  const [successMessage, setSuccessMessage] = useState("");
+
   useEffect(() => {
     getExpressions();
   }, []);
   
   const getExpressions = async () => {
     try {
-      const response = await fetch("/api/users/expressions");
+      const response = await fetch("/api/expressions");
       const data = await response.json();
       if(!response.ok) throw new Error(data.message);
       setExpressions(data);
@@ -34,8 +35,13 @@ function Expressions() {
 
   async function addExpression(e) {
     e.preventDefault();
+    const isExpressionExisting = expressions.some((expression) => expression.expression.toLowerCase() === newExpression.expression.toLowerCase());
+    if (isExpressionExisting) {
+    alert("This expression already exists!");
+    return;
+    }
     try {
-      const response = await fetch("/api/users/expressions", {
+      const response = await fetch("/api/expressions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,6 +52,8 @@ function Expressions() {
       console.log(data);
       if (!response.ok) throw new Error(data.message);
       getExpressions();
+      setSuccessMessage("Expression was added successfully!");
+      setNewExpression(state);
     } catch (err) {
       console.log(err);
     }
@@ -72,7 +80,7 @@ function Expressions() {
             type="text"
             name="expression"
             placeholder="expression"
-            value={newExpression.verb}
+            value={newExpression.expression}
             onChange={handleInputChange}
             />
           </label>
@@ -131,6 +139,11 @@ function Expressions() {
           <button >Submit</button>
         </form>
       </div>
+      {successMessage && (
+        <div className="success-message">
+          {successMessage}
+        </div>
+      )}
     </div>
  )
 }

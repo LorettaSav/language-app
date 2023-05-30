@@ -19,7 +19,7 @@ function Nouns() {
 
   const [nouns, setNouns] = useState([]);
   const [newNoun, setNewNoun] = useState(state);
-    
+  const [successMessage, setSuccessMessage] = useState(""); 
 
   useEffect(() => {
     getNouns();
@@ -29,7 +29,7 @@ function Nouns() {
 
   const getNouns = async () => {
     try {
-      const response = await fetch("/api/users/nouns");
+      const response = await fetch("/api/nouns");
       const data = await response.json();
       if(!response.ok) throw new Error(data.message);
       setNouns(data);
@@ -40,8 +40,18 @@ function Nouns() {
 
   async function addNoun(e) {
     e.preventDefault();
+    const isNounExisting = nouns.some((noun) => noun.noun.toLowerCase() === newNoun.noun.toLowerCase());
+    if (isNounExisting) {
+    alert("This noun already exists!");
+    return;
+    }
+    const firstLetter = newNoun.noun[0];
+    if (firstLetter === firstLetter.toLowerCase()) {
+    alert("Remember that in german the first letter of the nouns must be in uppercase.");
+    return;
+    }
     try {
-      const response = await fetch("/api/users/nouns", {
+      const response = await fetch("/api/nouns", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,6 +63,8 @@ function Nouns() {
       console.log(data);
       if (!response.ok) throw new Error(data.message);
       getNouns();
+      setSuccessMessage("Noun added successfully!");
+      setNewNoun(state);
     } catch (err) {
       console.log(err);
     }
@@ -131,6 +143,7 @@ function Nouns() {
             name="plural"
             placeholder="plural"
             value={newNoun.plural}
+            onChange={handleInputChange}
             />
           </label>
           <label> Do you have one or more examples of how to use this noun?
@@ -162,8 +175,13 @@ function Nouns() {
           <button className='buttons'>Submit</button>
         </form>
       </div>
+      {successMessage && (
+        <div className="success-message">
+          {successMessage}
+        </div>
+      )}
     </div>
   )
-}
+};
 
 export default Nouns

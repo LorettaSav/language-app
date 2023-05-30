@@ -10,7 +10,7 @@ const con = mysql.createConnection({
   host: DB_HOST || "127.0.0.1",
   user: DB_USER || "root",
   password: DB_PASS,
-  database: DB_NAME || "todos",
+  database: DB_NAME || "myapp",
   multipleStatements: true
 });
 
@@ -18,10 +18,10 @@ con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
 
-  let sql = "DROP TABLE if exists items; CREATE TABLE items(id INT NOT NULL AUTO_INCREMENT, text VARCHAR(40) not null, complete BOOLEAN, PRIMARY KEY (id));";
+  let sql = "DROP TABLE if exists nouns; CREATE TABLE nouns(id INT NOT NULL AUTO_INCREMENT, noun VARCHAR(255), meaning1 VARCHAR(255), meaning2 VARCHAR(255), meaning3 VARCHAR(255), article VARCHAR(255), preposition VARCHAR(255), plural VARCHAR(255), example1 VARCHAR(255), example2 VARCHAR(255), example3 VARCHAR(255), PRIMARY KEY (id)); DROP TABLE if exists adjectives; CREATE TABLE adjectives(id INT NOT NULL AUTO_INCREMENT, adjective VARCHAR(255), meaning1 VARCHAR(255), meaning2 VARCHAR(255), meaning3 VARCHAR(255), example1 VARCHAR(255), example2 VARCHAR(255), example3 VARCHAR(255), PRIMARY KEY (id)); DROP TABLE if exists verbs; CREATE TABLE verbs(id INT NOT NULL AUTO_INCREMENT, verb VARCHAR(255), meaning1 VARCHAR(255), meaning2 VARCHAR(255), meaning3 VARCHAR(255),  cases VARCHAR(255), preposition VARCHAR(255), example1 VARCHAR(255), example2 VARCHAR(255), example3 VARCHAR(255), PRIMARY KEY (id)); DROP TABLE if exists expressions; CREATE TABLE expressions(id INT NOT NULL AUTO_INCREMENT, expression VARCHAR(255), meaning1 VARCHAR(255), meaning2 VARCHAR(255), meaning3 VARCHAR(255), example1 VARCHAR(255), example2 VARCHAR(255), example3 VARCHAR(255), PRIMARY KEY (id));";
   con.query(sql, function (err, result) {
     if (err) throw err;
-    console.log("Table creation `items` was successful!");
+    console.log("Tables creation was successful!");
 
     console.log("Closing...");
   });
@@ -29,4 +29,47 @@ con.connect(function(err) {
   con.end();
 });
 
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
 
+//   let sql = "DROP TABLE if exists adjectives; CREATE TABLE adjectives(id INT NOT NULL AUTO_INCREMENT, adjective VARCHAR(255), meaning1 VARCHAR(255), meaning2 VARCHAR(255), meaning3 VARCHAR(255), example1 VARCHAR(255), example2 VARCHAR(255), example3 VARCHAR(255), PRIMARY KEY (id));"
+//   con.query(sql, function (err, result) {
+//     if (err) throw err;
+//     console.log("Table creation `adjectives` was successful!");
+
+//     console.log("Closing...");
+//   });
+
+//   con.end();
+// });
+
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+
+//   let sql = "DROP TABLE if exists verbs; CREATE TABLE verbs(id INT NOT NULL AUTO_INCREMENT, verb VARCHAR(255), meaning1 VARCHAR(255), meaning2 VARCHAR(255), meaning3 VARCHAR(255),  cases VARCHAR(255), preposition VARCHAR(255), example1 VARCHAR(255), example2 VARCHAR(255), example3 VARCHAR(255), PRIMARY KEY (id));";
+//   con.query(sql, function (err, result) {
+//     if (err) throw err;
+//     console.log("Table creation `verbs` was successful!");
+
+//     console.log("Closing...");
+//   });
+
+//   con.end();
+// });
+
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected!");
+
+//   let sql = "DROP TABLE if exists expressions; CREATE TABLE expressions(id INT NOT NULL AUTO_INCREMENT, expression VARCHAR(255), meaning1 VARCHAR(255), meaning2 VARCHAR(255), meaning3 VARCHAR(255), example1 VARCHAR(255), example2 VARCHAR(255), example3 VARCHAR(255), PRIMARY KEY (id));";
+//   con.query(sql, function (err, result) {
+//     if (err) throw err;
+//     console.log("Table creation `expressions` was successful!");
+
+//     console.log("Closing...");
+//   });
+
+//   con.end();
+// });

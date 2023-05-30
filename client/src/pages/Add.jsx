@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import Adjectives from "../AddComponents/Adjectives";
-import Expressions from "../AddComponents/Expressions";
-import Verbs from "../AddComponents/Verbs";
-import Nouns from "../AddComponents/Nouns";
+import { Routes, Route, Link, Outlet } from "react-router-dom";
 import "../App.css";
+
 
 function Add() {
   
@@ -13,7 +10,7 @@ function Add() {
       <div className="title">
         <h1>What Kind of Word Do You Want to Add?</h1>
       </div>
-      <div className="form">
+      <div>
         <nav>
         <Link to="/Add/Nouns" className="buttons">
           Noun
@@ -29,13 +26,7 @@ function Add() {
         </Link> 
         </nav>
       </div> 
-      <Routes>
-        <Route path="/Add/Nouns" element={<Nouns />} />
-        <Route path="/Add/Adjectives" element={<Adjectives />} />
-        <Route path="/Add/Verbs" element={<Verbs />} />
-        <Route path="/Add/Expressions" element={<Expressions />} />
-        {/* <Route path="*" element={<Error404View />} /> */}
-      </Routes>
+      <Outlet />
     </div>
   );
 }
