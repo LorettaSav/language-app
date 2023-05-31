@@ -71,7 +71,7 @@ function Expressions() {
   return(
     <div>
       <div className='title'>
-        <h1>Add New Expression</h1>
+        <h1 className='subtitles'>Add New Expression</h1>
       </div>
       <div className="form">
         <form onSubmit={addExpression}>
@@ -79,9 +79,10 @@ function Expressions() {
             <input 
             type="text"
             name="expression"
-            placeholder="expression"
+            className="examples-input"
             value={newExpression.expression}
             onChange={handleInputChange}
+            required
             />
           </label>
           <label> Enter one or more meanings of your new expression:
@@ -89,15 +90,15 @@ function Expressions() {
             className="meaning-input"
             type= "text" 
             name="meaning1"
-            placeholder="meaning1"
             value={newExpression.meaning1}
             onChange={handleInputChange}
+            required
             />
             <input 
             className="meaning-input"
             type="text" 
             name="meaning2"
-            placeholder="meaning2"
+            
             value={newExpression.meaning2}
             onChange={handleInputChange}
             />
@@ -105,7 +106,7 @@ function Expressions() {
             className="meaning-input" 
             type="text"
             name="meaning3"
-            placeholder="meaning3"
+           
             value={newExpression.meaning3}
             onChange={handleInputChange}
             />
@@ -115,7 +116,7 @@ function Expressions() {
             className="examples-input"
             type="text" 
             name="example1"
-            placeholder="example1"
+           
             value={newExpression.example1}
             onChange={handleInputChange}
             />
@@ -123,7 +124,7 @@ function Expressions() {
             className="examples-input"
             type="text" 
             name="example2"
-            placeholder="examples2"
+           
             value={newExpression.example2}
             onChange={handleInputChange}
             />
@@ -131,14 +132,14 @@ function Expressions() {
             className="examples-input" 
             type="text" 
             name="example3"
-            placeholder="examples3"
+            
             value={newExpression.example3}
             onChange={handleInputChange}
             />
           </label>
-          <button >Submit</button>
         </form>
       </div>
+      <button className='submitbutton'  onClick={addExpression}>Submit</button>
       {successMessage && (
         <div className="success-message">
           {successMessage}

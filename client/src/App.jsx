@@ -13,10 +13,10 @@ import "./App.css";
 function App() {
   
   return (
-    <div className="container">
+    <div>
       <div className="title">
-        <img className="logo" src="logo.gif" alt="logo"/>
-        <h1>What would you like to do ?</h1>
+        <div className="logo"></div>
+        <h1 className="subtitles">What would you like to do ?</h1>
       </div>
       <div>
         <nav>

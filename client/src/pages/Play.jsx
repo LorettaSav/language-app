@@ -3,27 +3,27 @@ import { useState, useEffect } from "react";
 function Play() {
 
   const nounSteps = {
-    meaning1: "What is the meaninng of this noun?",
+    meaning1: "What is the meaning of this noun?",
     meaning2: "Do you remember another meaning of this noun?",
     meaning3: "Do you remember another meaning of this noun?",
     preposition: "What is the preposition of this noun?",
     plural: "What is the plural of this noun?"
   }
   const adjectiveSteps = {
-    meaning1: "What is the meaninng of this adjective?",
+    meaning1: "What is the meaning of this adjective?",
     meaning2: "Do you remember another meaning of this adjective?",
     meaning3: "Do you remember another meaning of this adjective?"
   }
 
   const verbSteps = {
-    meaning1: "What is the meaninng of this verb?",
+    meaning1: "What is the meaning of this verb?",
     meaning2: "Do you remember another meaning of this verb?",
     meaning3: "Do you remember another meaning of this verb?",
     cases: "What is the case of this verb?",
     preposition: "What is the preposition of this verb?"
   }
   const expressionSteps = {
-    meaning1: "What is the meaninng of this expression?",
+    meaning1: "What is the meaning of this expression?",
     meaning2: "Do you remember another meaning of this expression?",
     meaning3: "Do you remember another meaning of this expression?"
   }
@@ -62,67 +62,98 @@ function Play() {
 
 function checkCurrentAnswer(){
   console.log("button was clicked")
+  const currentStep = filteredSteps[step]; 
+  const rightAnswer = "The answer is correct!";
+  const wrongAnswer = `The answer is incorrect, the right answer is: ${word[currentStep]}`
+  
   if(word.hasOwnProperty("noun")){
-    
-    if(word[Object.keys(nounSteps)[step]] === input){
+    if(word[currentStep] === input ||
+      (word[currentStep] === null && input === "")){
       //setIsCorrect(true);
-      setMessage("The answer is correct!");
+      setMessage(rightAnswer);
+      setInput("");
       setStep((step) => step + 1);
     }else {
       //setIsCorrect(false);
-      setMessage("The answer is incorrect, try again!")
+      setMessage(wrongAnswer)
      }
     }
 
     if(word.hasOwnProperty("adjective")){
-      if(word[Object.keys(adjectiveSteps)[step]] === input){
+      
+      if(word[currentStep] === input ||
+        (word[currentStep] === null && input === "")){
         //setIsCorrect(true);
-        setMessage("The answer is correct!");
+        setMessage(rightAnswer);
+        setInput("");
         setStep((step) => step + 1);
       } else {
         //setIsCorrect(false);
-        setMessage("The answer is incorrect, try again!");
+        setMessage(wrongAnswer);
       }
     }
     
     if(word.hasOwnProperty("verb")){
-      if(word[Object.keys(verbSteps)[step]] === input){
+     
+      if(
+        word[currentStep] === input ||
+        (word[currentStep] === null && input === "")){
         //setIsCorrect(true);
-        setMessage("The answer is correct!");
+        setMessage(rightAnswer);
+        setInput("");
         setStep((step) => step + 1);
       } else {
         //setIsCorrect(false);
-        setMessage("The answer is incorrect, try again!");
+        setMessage(wrongAnswer);
        }
       }
       
       if(word.hasOwnProperty("expression")){
-        if(word[Object.keys(expressionSteps)[step]] === input){
+        
+        if(
+          word[currentStep] === input ||
+          (word[currentStep] === null && input === "")){
           //setIsCorrect(true);
-          setMessage("The answer is correct!");
+          setMessage(rightAnswer);
+          setInput("");
           setStep((step) => step + 1);
         } else {
-          //setIsCorrect(true);
-          setMessage("The answer is incorrect, try again!");
+          //setIsCorrect(false);
+          setMessage(wrongAnswer);
          }
         }
       };
 
   function filterSteps(){
+    if (!word) return [];
     if(word.hasOwnProperty("noun")){
-      return Object.keys(nounSteps).filter(key => word[key] !== "")
+      return Object.keys(nounSteps).filter(key => {
+        // console.log(key, word[key]);
+        return word[key] !== "" && word[key] !== null
+      });
     }
     if(word.hasOwnProperty("adjective")){
-      return Object.keys(adjectiveSteps).filter(key => word[key] !== "")
+      return Object.keys(adjectiveSteps).filter(key => {
+        // console.log(key, word[key]);
+        return word[key] !== "" && word[key] !== null
+      });
     }
     if(word.hasOwnProperty("verb")){
-      return Object.keys(verbSteps).filter(key => word[key] !== "")
+      return Object.keys(verbSteps).filter(key => {
+        return word[key] !== "" && word[key] !== null
+      });
     }
     if(word.hasOwnProperty("expression")){
-      return Object.keys(expressionSteps).filter(key => word[key] !== "")
+      return Object.keys(expressionSteps).filter(key => {
+        return word[key] !== "" && word[key] !== null
+      });
     }
+        
+       
   }      
   
+  const filteredSteps = filterSteps();
+
   function handleNewWord(){
     setStep(0);
     setInput("");
@@ -134,89 +165,138 @@ function checkCurrentAnswer(){
 
   return (
   <div>
-    <h2>Let's Play!</h2>
-    <button onClick={handleNewWord} className="buttons">Get another word</button>
+    <h2 className="subtitles">Let's Play!</h2>
+    <button onClick={handleNewWord} className="small-buttons">
+      Get another word
+    </button>
     { word && word.hasOwnProperty("noun") && 
-      step < filterSteps().length && showContent &&(  
+      step < filteredSteps.length &&
+       showContent &&(  
         <div>
-            <div>
-            {word.article} {word.noun}
+          <div className="game-container">
+            <div className="word-container">
+             {word.article} {word.noun}
             </div>
-            <div>{nounSteps[filterSteps()[step]]}</div>
-            <input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
-            <button onClick={() => checkCurrentAnswer()} className="buttons">Check Answer</button>
-            <div>{message}</div>
+            <div className="divider"></div>
+            <div className="question-container">
+              {nounSteps[filteredSteps[step]]}
+            </div>
+            <input
+            className="examples-input" 
+            type="text" 
+            value={input} 
+            onChange={(e) => setInput(e.target.value)} 
+            />
+            </div>
+            <button onClick={() => checkCurrentAnswer()} className="check-buttons">
+              Check Answer
+            </button>
+            <div className="success-message">{message}</div>
           </div>
         )
       }
       
-      {word && step >= filterSteps().length && (
-        <div> 
-          <div>Good job! Here are some examples of how to use this noun: {word.example1}, {word.example2}, {word.example3}</div>
-          <button onClick={handleNewWord} className="buttons">Get a new Word</button>
-        </div>
-      )}
+      
 
       { word && word.hasOwnProperty("adjective") && 
-      step < filterSteps().length && showContent &&(  
+      step < filteredSteps.length && 
+      showContent &&(  
         <div>
-            <div>
+          <div className="game-container">
+            <div className="word-container">
             {word.adjective}
             </div>
-            <div>{adjectiveSteps[filterSteps()[step]]}</div>
-            <input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
-            <button onClick={() => checkCurrentAnswer()} className="buttons">Check Answer</button>
-            <div>{message}</div>
+            <div className="divider"></div>
+            <div className="question-container">
+              {adjectiveSteps[filteredSteps[step]]}
+              </div>
+            <input 
+              className="examples-input" 
+              type="text" 
+              value={input} 
+              onChange={(e) => setInput(e.target.value)} 
+            />
+            </div>
+            <button onClick={() => checkCurrentAnswer()} className="check-buttons">
+              Check Answer
+            </button>
+            <div className="success-message">{message}</div>
           </div>
         )
       }
       
-      {word && step >= filterSteps().length && (
-        <div>
-          <div>Good job! Here are some examples of how to use this adjective: {word.example1}, {word.example2}, {word.example3}</div>
-          <button  onClick={handleNewWord} className="buttons">Get a new Word</button>
-        </div>
-      )}
+      
 
-{ word && word.hasOwnProperty("verb") && 
-      step < filterSteps().length && showContent &&(  
+    { word && 
+      word.hasOwnProperty("verb") && 
+      step < filteredSteps.length && 
+      showContent && (  
         <div>
-            <div>
+          <div className="game-container">
+            <div className="word-container">
             {word.verb}
             </div>
-            <div>{verbSteps[filterSteps()[step]]}</div>
-            <input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
-            <button onClick={() => checkCurrentAnswer()} className="buttons">Check Answer</button>
-            <div>{message}</div>
+            <div className="divider"></div>
+            <div className="question-container">
+              {verbSteps[filteredSteps[step]]}
+            </div>
+            <input 
+              className="examples-input" 
+              type="text" 
+              value={input} 
+              onChange={(e) => setInput(e.target.value)} 
+              />
+            </div>
+            <button onClick={() => checkCurrentAnswer()} className="check-buttons">
+              Check Answer
+            </button>
+            <div className="success-message">{message}</div>
           </div>
         )
       }
       
-      {word && step >= filterSteps().length && (
-        <div>
-          <div>Good job! Here are some examples of how to use this verb: {word.example1}, {word.example2}, {word.example3}</div>
-          <button  onClick={handleNewWord} className="buttons">Get a new Word</button>
-        </div>
-      )}
+      
 
-{ word && word.hasOwnProperty("expression") && 
-      step < filterSteps().length && showContent &&(  
+    { word && word.hasOwnProperty("expression") && 
+      step < filteredSteps.length && 
+      showContent &&(  
         <div>
-            <div>
+          <div className="expression-container">
+            <div className="word-container">
             {word.expression}
             </div>
-            <div>{expressionSteps[filterSteps()[step]]}</div>
-            <input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
-            <button onClick={() => checkCurrentAnswer()} className="buttons">Check Answer</button>
-            <div>{message}</div>
+            <div className="divider"></div>
+            <div className="question-container">
+              {expressionSteps[filteredSteps[step]]}
+            </div>
+            <input
+              className="examples-input"  
+              type="text" 
+              value={input} 
+              onChange={(e) => setInput(e.target.value)} 
+            />
+            <button onClick={() => checkCurrentAnswer()} className="expression-check-buttons">
+              Check Answer
+            </button>
+            </div>
+            <div className="success-message">{message}</div>
           </div>
         )
       }
       
-      {word && step >= filterSteps().length && (
+      {word && step >= filteredSteps.length && (
         <div>
-          <div>Good job! Here are some examples of how to use this expression: {word.example1}, {word.example2}, {word.example3}</div>
-          <button  onClick={handleNewWord} className="buttons">Get a new Word</button>
+          <div className="final-message">
+            <span className="congrats">Good job! Here are some examples of how to use this word:</span><br />
+            <span className="examples">
+              {word.example1}<br /> 
+              {word.example2}<br /> 
+              {word.example3}
+            </span>
+          </div>
+          <button  onClick={handleNewWord} className="check-buttons">
+            Get a new Word
+          </button>
         </div>
       )}
   </div>

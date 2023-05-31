@@ -70,7 +70,7 @@ function Verbs() {
   return(
     <div>
       <div className='title'>
-        <h1>Add New Verb</h1>
+        <h1 className="subtitles">Add New Verb</h1>
       </div>
       <div className="form">
         <form onSubmit={addVerb}>
@@ -78,9 +78,9 @@ function Verbs() {
             <input 
             type="text"
             name="verb"
-            placeholder="verb"
             value={newVerb.verb}
             onChange={handleInputChange}
+            required
             />
           </label>
           <label> Enter one or more meanings of your new verb:
@@ -88,15 +88,15 @@ function Verbs() {
             className="meaning-input"
             type= "text" 
             name="meaning1"
-            placeholder="meaning1"
             value={newVerb.meaning1}
             onChange={handleInputChange}
+            required
             />
             <input 
             className="meaning-input"
             type="text" 
             name="meaning2"
-            placeholder="meaning2"
+            
             value={newVerb.meaning2}
             onChange={handleInputChange}
             />
@@ -104,7 +104,7 @@ function Verbs() {
             className="meaning-input" 
             type="text"
             name="meaning3"
-            placeholder="meaning3"
+            
             value={newVerb.meaning3}
             onChange={handleInputChange}
             />
@@ -113,7 +113,7 @@ function Verbs() {
             <input 
             type="text" 
             name="preposition"
-            placeholder="preposition"
+            
             value={newVerb.preposition}
             onChange={handleInputChange}
             />
@@ -122,7 +122,7 @@ function Verbs() {
             <input 
             type="text" 
             name="cases"
-            placeholder="case"
+            
             value={newVerb.cases}
             onChange={handleInputChange}
             />
@@ -132,7 +132,7 @@ function Verbs() {
             className="examples-input"
             type="text" 
             name="example1"
-            placeholder="example1"
+            
             value={newVerb.example1}
             onChange={handleInputChange}
             />
@@ -140,7 +140,7 @@ function Verbs() {
             className="examples-input"
             type="text" 
             name="example2"
-            placeholder="examples2"
+            
             value={newVerb.example2}
             onChange={handleInputChange}
             />
@@ -148,14 +148,14 @@ function Verbs() {
             className="examples-input" 
             type="text" 
             name="example3"
-            placeholder="examples3"
+            
             value={newVerb.example3}
             onChange={handleInputChange}
             />
           </label>
-          <button >Submit</button>
         </form>
       </div>
+      <button className='submitbutton' onClick={addVerb}>Submit</button>
       {successMessage && (
         <div className="success-message">
           {successMessage}

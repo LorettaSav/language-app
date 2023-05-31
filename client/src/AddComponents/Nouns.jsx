@@ -45,8 +45,9 @@ function Nouns() {
     alert("This noun already exists!");
     return;
     }
-    const firstLetter = newNoun.noun[0];
-    if (firstLetter === firstLetter.toLowerCase()) {
+    const firstLetterNoun = newNoun.noun[0];
+    const firstLetterPlural = newNoun.plural[0];
+    if (firstLetterNoun === firstLetterNoun.toLowerCase() || firstLetterPlural === firstLetterPlural.toLowerCase()) {
     alert("Remember that in german the first letter of the nouns must be in uppercase.");
     return;
     }
@@ -80,7 +81,7 @@ function Nouns() {
   return(
     <div>
       <div className='title'>
-        <h1>Add New Noun</h1>
+        <h1 className='subtitles'>Add New Noun</h1>
       </div>
       <div className="form">
         <form onSubmit={addNoun}>
@@ -88,9 +89,9 @@ function Nouns() {
             <input 
             type="text"
             name="noun"
-            placeholder="noun"
             value={newNoun.noun}
             onChange={handleInputChange}
+            required
             />
           </label>
           <label> Enter one or more meanings of your new noun:
@@ -98,15 +99,15 @@ function Nouns() {
             className="meaning-input"
             type= "text" 
             name="meaning1"
-            placeholder="meaning1"
             value={newNoun.meaning1}
             onChange={handleInputChange}
+            required
             />
             <input 
             className="meaning-input"
             type="text" 
             name="meaning2"
-            placeholder="meaning2"
+           
             value={newNoun.meaning2}
             onChange={handleInputChange}
             />
@@ -114,7 +115,7 @@ function Nouns() {
             className="meaning-input" 
             type="text"
             name="meaning3"
-            placeholder="meaning3"
+            
             value={newNoun.meaning3}
             onChange={handleInputChange}
             />
@@ -123,16 +124,16 @@ function Nouns() {
             <input 
             type="text"
             name="article" 
-            placeholder="article"
             value={newNoun.article}
             onChange={handleInputChange}
+            required
             />
           </label>
           <label> Does your noun have a preposition?
             <input 
             type="text" 
             name="preposition"
-            placeholder="preposition"
+            
             value={newNoun.preposition}
             onChange={handleInputChange}
             />
@@ -141,7 +142,7 @@ function Nouns() {
             <input 
             type="text" 
             name="plural"
-            placeholder="plural"
+            
             value={newNoun.plural}
             onChange={handleInputChange}
             />
@@ -151,7 +152,7 @@ function Nouns() {
             className="examples-input"
             type="text" 
             name="example1"
-            placeholder="example1"
+            
             value={newNoun.example1}
             onChange={handleInputChange}
             />
@@ -159,7 +160,7 @@ function Nouns() {
             className="examples-input"
             type="text" 
             name="example2"
-            placeholder="examples2"
+            
             value={newNoun.example2}
             onChange={handleInputChange}
             />
@@ -167,14 +168,14 @@ function Nouns() {
             className="examples-input" 
             type="text" 
             name="example3"
-            placeholder="examples3"
+           
             value={newNoun.example3}
             onChange={handleInputChange}
             />
           </label>
-          <button className='buttons'>Submit</button>
         </form>
       </div>
+      <button className='submitbutton' onClick={addNoun}>Submit</button>
       {successMessage && (
         <div className="success-message">
           {successMessage}

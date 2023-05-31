@@ -68,7 +68,7 @@ function Adjectives() {
   return(
     <div>
       <div className='title'>
-        <h1>Add New Adjective</h1>
+        <h1 className='subtitles'>Add New Adjective</h1>
       </div>
       <div className="form">
         <form onSubmit={addAdjective}>
@@ -76,9 +76,9 @@ function Adjectives() {
             <input 
             type="text"
             name="adjective"
-            placeholder="adjective"
             value={newAdjective.adjective}
             onChange={handleInputChange}
+            required
             />
           </label>
           <label> Enter one or more meanings of your new adjective:
@@ -86,15 +86,15 @@ function Adjectives() {
             className="meaning-input"
             type= "text" 
             name="meaning1"
-            placeholder="meaning1"
             value={newAdjective.meaning1}
             onChange={handleInputChange}
+            required
             />
             <input 
             className="meaning-input"
             type="text" 
             name="meaning2"
-            placeholder="meaning2"
+            
             value={newAdjective.meaning2}
             onChange={handleInputChange}
             />
@@ -102,25 +102,25 @@ function Adjectives() {
             className="meaning-input" 
             type="text"
             name="meaning3"
-            placeholder="meaning3"
+           
             value={newAdjective.meaning3}
             onChange={handleInputChange}
             />
           </label>
-          <label> Do you have one or more examples of how to use this noun?
+          <label> Do you have one or more examples of how to use this adjective?
             <input 
             className="examples-input"
             type="text" 
             name="example1"
-            placeholder="example1"
             value={newAdjective.example1}
             onChange={handleInputChange}
+           
             />
             <input 
             className="examples-input"
             type="text" 
             name="example2"
-            placeholder="examples2"
+           
             value={newAdjective.example2}
             onChange={handleInputChange}
             />
@@ -128,14 +128,14 @@ function Adjectives() {
             className="examples-input" 
             type="text" 
             name="example3"
-            placeholder="examples3"
+            
             value={newAdjective.example3}
             onChange={handleInputChange}
             />
           </label>
-          <button >Submit</button>
         </form>
       </div>
+      <button className='submitbutton'  onClick={addAdjective}>Submit</button> 
       {successMessage && (
         <div className="success-message">
           {successMessage}

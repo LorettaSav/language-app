@@ -149,8 +149,8 @@ const toggleExpressions = () => {
 
 return(
   <div>
-   
-    <button onClick={toggleNouns} className="buttons">
+   <h1 className="subtitles">What Kind of Word do you want to review?</h1>
+    <button onClick={toggleNouns} className="small-buttons">
     Nouns
     </button>
 
@@ -159,102 +159,152 @@ return(
      {nouns.map((noun) =>(
       <div key={noun.id} >
         <div className="flashcards">
-        Name: {noun.noun}<br />
-        Meanings:<br />
-        {noun.meaning1}<br />
-        {noun.meaning2}<br />
-        {noun.meaning3}<br />
-        Article: {noun.article}<br />
-        Preposition: {noun.preposition}<br />
-        Plural: {noun.plural}<br />
-        Examples: <br />
-        {noun.example1}<br />
-        {noun.example2}<br />
-        {noun.example3}<br />
-        </div>
-        <button onClick={() =>
-          deleteNoun(noun.id)} className='smallerbuttons'>Delete
+        <div className="name">{noun.article} {noun.noun}</div><br />
+        <div className="divider"></div>
+        <span className="span1">Meanings:</span><br />
+        <div className="divider"></div>
+        <span className="span2">{noun.meaning1}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{noun.meaning2}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{noun.meaning3}</span><br />
+        <div className="divider"></div>
+        
+        <span className="span1">Preposition:</span><span className="span2">{noun.preposition}</span><br />
+        <div className="divider"></div>
+        <span className="span1">Plural:</span><span className="span2">{noun.plural}</span><br />
+        <div className="divider"></div>
+        <span className="span1">Examples: </span><br />
+        <div className="divider"></div>
+        <span className="span2">{noun.example1}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{noun.example2}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{noun.example3}</span><br />
+        <div className="divider"></div>
+
+       
+        <button className="delete-button" onClick={() =>
+          deleteNoun(noun.id)}>Delete
         </button>
+        
+
+        </div>
       </div>
      ))}
     </div>
     )}
 
     
-    <button onClick={toggleAdjectives} className="buttons">Adjectives</button>
+    <button onClick={toggleAdjectives} className="small-buttons">Adjectives</button>
 
     {showAdjectives && (
     <div name="adjectives" >
      {adjectives.map((adjective) =>(
       <div key={adjective.id}>
         <div className="flashcards">
-        Name:{adjective.adjective}<br />
-        Meanings:<br />
-        {adjective.meaning1}<br />
-        {adjective.meaning2}<br />
-        {adjective.meaning3}<br />
-        Examples:<br />
-        {adjective.example1}<br />
-        {adjective.example2}<br />
-        {adjective.example3}<br />
-        </div>
-        <button onClick={() =>
-          deleteAdjective(adjective.id)} className='smallerbuttons'>Delete
+        <div  className="name">{adjective.adjective}</div><br />
+        <div className="divider"></div>
+        <span className="span1">Meanings:</span><br />
+        <div className="divider"></div>
+        <span className="span2">{adjective.meaning1}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{adjective.meaning2}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{adjective.meaning3}</span><br />
+        <div className="divider"></div>
+        <span className="span1">Examples:</span><br />
+        <div className="divider"></div>
+        <span className="span2">{adjective.example1}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{adjective.example2}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{adjective.example3}</span><br />
+        <div className="divider"></div>
+        
+        <button className='delete-button' onClick={() =>
+          deleteAdjective(adjective.id)}>Delete
         </button>
+       
+        </div>
       </div>
      ))}
     </div>
     )}  
 
     
-    <button onClick={toggleVerbs} className="buttons">Verbs</button>
+    <button onClick={toggleVerbs} className="small-buttons">Verbs</button>
 
     {showVerbs && (
     <div name="verbs" >
      {verbs.map((verb) =>(
       <div key={verb.id}>
         <div className="flashcards">
-        Name: {verb.verb}<br />
-        Meanings:<br />
-        {verb.meaning1}<br />
-        {verb.meaning2}<br />
-        {verb.meaning3}<br />
-        Cases: {verb.cases}<br />
-        Preposition: {verb.preposition}<br />
-        Examples:<br />
-        {verb.example1}<br />
-        {verb.example2}<br />
-        {verb.example3}<br />
-        </div>
-        <button onClick={() =>
-          deleteVerb(verb.id)} className='smallerbuttons'>Delete
+        <div className="name">{verb.verb}</div><br />
+        <div className="divider"></div>
+        <span className="span1">Meanings:</span><br />
+        <div className="divider"></div>
+        <span className="span2">{verb.meaning1}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{verb.meaning2}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{verb.meaning3}</span><br />
+        <div className="divider"></div>
+        <span className="span1">Cases:</span><span className="span2">{verb.cases}</span><br />
+        <div className="divider"></div>
+        <span className="span1">Preposition:</span><span className="span2">{verb.preposition}</span><br />
+        <div className="divider"></div>
+        <span className="span1">Examples:</span><br />
+        <div className="divider"></div>
+        <span className="span2">{verb.example1}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{verb.example2}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{verb.example3}</span><br />
+        <div className="divider"></div>
+       
+        <button className='delete-button' onClick={() =>
+          deleteVerb(verb.id)}>Delete
         </button>
+        
+        </div>
       </div>
      ))}
     </div>
     )}
 
     
-    <button onClick={toggleExpressions} className="buttons">Expressions</button>
+    <button onClick={toggleExpressions} className="small-buttons">Expressions</button>
 
     {showExpressions && (
     <div name="expressions" >
      {expressions.map((expression) =>(
       <div key={expression.id}>
         <div className="flashcards">
-        Name: {expression.expression}<br />
-        Meanings:<br />
-        {expression.meaning1}<br />
-        {expression.meaning2}<br />
-        {expression.meaning3}<br />
-        Examples:<br />
-        {expression.example1}<br />
-        {expression.example2}<br />
-        {expression.example3}<br />
-        </div>
-        <button onClick={() =>
-          deleteExpression(expression.id)} className='smallerbuttons'>Delete
+        <div className="name-expression">{expression.expression}</div><br />
+        <div className="divider"></div>
+        <span className="span1">Meanings:</span><br />
+        <div className="divider"></div>
+        <span className="span2">{expression.meaning1}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{expression.meaning2}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{expression.meaning3}</span><br />
+        <div className="divider"></div>
+        <span className="span1">Examples:</span><br />
+        <div className="divider"></div>
+        <span className="span2">{expression.example1}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{expression.example2}</span><br />
+        <div className="divider"></div>
+        <span className="span2">{expression.example3}</span><br />
+        <div className="divider"></div>
+        
+        <button className='delete-button' onClick={() =>
+          deleteExpression(expression.id)} >Delete
         </button>
+        
+        </div>
       </div>
      ))}
     </div>
