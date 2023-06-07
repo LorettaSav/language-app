@@ -1,24 +1,24 @@
 var express = require('express');
 var router = express.Router();
-const nouns = require("./nouns.js");
-const adjectives = require("./adjectives.js");
-const verbs = require("./verbs.js");
-const expressions = require("./expressions.js");
-const db = require("../model/helper.js")
+// const nouns = require("./nouns.js");
+// const adjectives = require("./adjectives.js");
+// const verbs = require("./verbs.js");
+// const expressions = require("./expressions.js");
+//const db = require("../model/helper.js")
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.send({ title: 'Express' });
-});
+// /* GET home page. */
+// router.get('/', function(req, res, next) {
+//   res.send({ title: 'Express' });
+// });
 
-router.get('/api/words/random', (req, res) => {
-  const tableName = req.query.table;
-  db(`SELECT * FROM ${tableName} ORDER BY RAND()LIMIT 1;`)
-  .then((results) => {
-    res.send(results.data);
-  })
-  .catch((err) => res.status(500).send(err));
-});
+// router.get('/api/words/random', (req, res) => {
+//   const tableName = req.query.table;
+//   db(`SELECT * FROM ${tableName} ORDER BY RAND()LIMIT 1;`)
+//   .then((results) => {
+//     res.send(results.data);
+//   })
+//   .catch((err) => res.status(500).send(err));
+// });
   
 
 // router.get("/api/words/random", (req, res) => {

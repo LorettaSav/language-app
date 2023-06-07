@@ -1,51 +1,93 @@
-import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import Add from "./pages/Add";
-import Adjectives from "./AddComponents/Adjectives";
-import Expressions from "./AddComponents/Expressions";
-import Verbs from "./AddComponents/Verbs";
-import Nouns from "./AddComponents/Nouns";
+//import { useState, useEffect } from "react";
 import Review from "./pages/Review";
 import Play from "./pages/Play";
-import background from "./background.jpg";
+//import background from "./background.jpg";
+import Form from "./Components/Form";
+import HomePage from "./pages/HomePage";
+//import RegistrationForm from "./Components/RegistrationForm";
+//import NavBar from "./Components/NavBar";
+//import PrivatePage from "./Components/PrivatePage";
+//import { AuthContext } from "./Contexts/authContext";
+
 import "./App.css";
+//import Login from "./Components/Login";
+//import RequireAuth from "./Components/RequireAuth";
 
 function App() {
-  
+  // const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token")
+  //   if (token) {
+  //     setUser(true);
+  //   }
+  // })
+  // const authObject = {
+  //   user,
+  //   login,
+  //   logout
+  // }
+
+  // function login(username, password) {
+  //   setUser(true);
+  //   localStorage.removeItem("token")
+  // }
+
+  // function logout() {
+  //   setUser(false)
+  // }
+
+
   return (
-    <div>
-      <div className="title">
-        <div className="logo"></div>
-        <h1 className="subtitles">What would you like to do ?</h1>
-      </div>
-      <div>
-        <nav>
-        <Link to="/Add" className="buttons">
-          Add a New Word 
-        </Link>
-        <Link to="/Review"className="buttons">
-          Review Your Words
-        </Link>
-        <Link to="/Play" className="buttons">
-          Play!
-        </Link>
+    // <AuthContext.Provider value={authObject}>
+    <div style={{ textAlign: "center" }}>
+        <HomePage /> {/* my logo*/}
+        
+      {/* <div>
+        <NavBar />
+        <div>
+          <Routes>
+            <Route path="/login" element={<Login/>} />
+              <Route path="/dashboard" element={<RequireAuth>
+                <PrivatePage/>
+              </RequireAuth>} />
+          </Routes>
+        </div>
+
+      </div> */}
+      <div className="homeBox">
+        
+        <nav style={{ display: "flex", justifyContent: "start" }}>
+          <div className="link-btn">
+            <Link to="/add/form" className="buttons">
+              Add a New Word
+            </Link>
+          </div>
+          <div className="link-btn">
+            <Link to="/Review" className="buttons">
+              Review Your Words
+            </Link>
+          </div>
+          <div className="link-btn">
+            <Link to="/Play" className="buttons">
+              Play!
+            </Link>
+          </div>
         </nav>
-      </div> 
+      </div>
+      {/* <div>
+        <RegistrationForm />
+      </div> */}
       <Routes>
-        <Route path="/Add/" element={<Add />} >
-          <Route path="/Add/Nouns" element={<Nouns />} />
-          <Route path="/Add/Adjectives" element={<Adjectives />} />
-          <Route path="/Add/Verbs" element={<Verbs />} />
-          <Route path="/Add/Expressions" element={<Expressions />} />
-        </Route>
+        <Route path="/add/form" element={<Form />} />
         <Route path="/Review" element={<Review />} />
         <Route path="/Play" element={<Play />} />
-        {/* <Route path="*" element={<Error404View />} /> */}
       </Routes>
-    </div>
+      </div>
+          // </AuthContext.Provider>
+
   );
 }
-    
-         
-       
+
 export default App;
