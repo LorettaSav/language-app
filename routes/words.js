@@ -79,11 +79,38 @@ router.get("/:id/fields", async function (req, res, next) {
 router.post("/", async function (req, res, next) {
   const { word, type } = req.body;
   try {
-    await models.Word.findOne({
-      where: { word: word, type: type },
+    // await models.Word.findOne({
+    //   where: { word: word, type: type },
+    // });
+    // create the word in the words table
+    const word = await models.Word.create({ word, type });
+
+    // getting all the fields from the fields table
+    const fields = await models.Field.findAll({
+      where: {
+        [Sequelize.Op.or]: [
+          { field: "meaning1" },
+          { field: "meaning2" },
+          { field: "plural" },
+        ],
+      },
     });
-    const myWord = await models.Word.create({ word, type });
-    res.send(myWord);
+
+    // fields has this structure:
+    // [
+    //   { id: 1, field: 'meaning1' },
+    //   { id: 2, field: 'meaning2' },
+    //   { id: 3, field: 'plural' }
+    // ]
+
+    // add "values" into the Value table
+    const values = await models.Value.bulkCreate(
+      fields.map((field) => ({
+        value: req.body[field.field],
+        fieldId: field.id,
+        wordId: word.id,
+      }))
+    );
   } catch (error) {
     res.status(500).send(error);
   }
