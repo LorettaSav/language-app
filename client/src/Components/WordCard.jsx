@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function WordCard() {
-  const [words, setWords] = useState([]);
+  const [values, setValues] = useState([]);
   const [type, getType] = useState("")
   const [isOne, setIsOne] = useState(false)
     
@@ -14,7 +14,7 @@ export default function WordCard() {
       const res = await fetch("/api/words");
       const data = await res.json();
       if (!res) throw new Error(data.message);
-      setWords(data);
+      setValues(data);
     } catch (err) {
       console.log(err);
     }
@@ -34,9 +34,7 @@ export default function WordCard() {
 
   return (
     <div>
-      <h5>{word}</h5>
-      <p><i>{type}</i></p>
-      
+      hello    
     </div>
   );
 }

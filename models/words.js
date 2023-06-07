@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Word.belongsToMany(models.Field, {through: "Values"})
+      Word.belongsToMany(models.Field, { through: "Values" , foreignKey: "wordId" })
 
     }
   }

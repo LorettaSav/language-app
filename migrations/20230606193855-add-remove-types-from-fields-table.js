@@ -3,9 +3,9 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return  queryInterface.removeColumn(
-      "Fields",
-      "type"
+    return  queryInterface.alterColumn(
+      "Values",
+      "wordId"
     )
   },
 

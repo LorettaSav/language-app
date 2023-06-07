@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import "../App.css";
-import WordCard from "../Components/WordCard";
-import Form from "../Components/Form";
-import { Routes, Route, Link } from "react-router-dom";
+//import WordCard from "../Components/WordCard";
+import { Routes,Route,Link } from "react-router-dom";
 
 function Review() {
   const [words, setWords] = useState([]);
   const [seeAll, setSeeAll] = useState(false);
+  const [seeType, setSeeType] = useState(false)
   const [toReview, setToReview] = useState("");
+  const [getWordsClick, setGetWordsClick] = useState(false);
   const [wordCard, setWordCard] = useState(false);
 
   useEffect(() => {
@@ -16,11 +17,17 @@ function Review() {
 
   function handleSelectAllClick() {
     setSeeAll(true);
+    setSeeType(false)
+    setGetWordsClick(true)
+    getWords();
+
   }
 
   function gettingWords() {
-    getWordWithType();
-    setSeeAll(true);
+    setSeeType(true)
+    getWordWithType(toReview);
+    setSeeAll(false);
+    setGetWordsClick(true)
   }
 
   function handleChange(e) {
@@ -29,8 +36,18 @@ function Review() {
 
   function handleWordCards(id) {
     setWordCard(true);
-    getWordCard(id);
+    // getWordCard(id);
     console.log("click");
+  }
+
+  function handleChooseTypeAgain() {
+    setGetWordsClick(false)
+   
+  }
+
+  function handleDelete(id) {
+    deleteWord(id)
+    getWordWithType(toReview)
   }
 
   async function getWords() {
@@ -45,9 +62,9 @@ function Review() {
   }
 
   //when type selected
-  async function getWordWithType() {
+  async function getWordWithType(type) {
     try {
-      const res = await fetch(`api/words/${toReview}`);
+      const res = await fetch(`api/words/types/${type}`);
       const data = await res.json();
       setWords(data);
     } catch (err) {
@@ -55,27 +72,14 @@ function Review() {
     }
   }
 
-  //get
-  //When word Clicked
-  async function getWordCard(id) {
-    const valueID = id;
-    console.log(id);
-    try {
-      const res = await fetch(`/api/values/${valueID}/wordfields`);
-      const data = await res.json();
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
+  //to delete word
   async function deleteWord(id) {
     try {
       const res = await fetch(`/api/words/${id}`, {
         method: "DELETE",
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      if (!res.ok) throw new Error(data.message);
     } catch (err) {
       console.log(err);
     }
@@ -83,45 +87,62 @@ function Review() {
 
   return (
     <div>
-      <div style={{ display: "flex" }} className="container-fluid">
-        <div className="row">
-          <div className="col-9 form">
-            
-            
+      {!getWordsClick ? (
+        <div style={{ display: "flex" }} className="container-fluid">
+          <div className="row">
+            <div className="col-9 form">
               <label htmlFor="">
                 What type of words would you like to review?
               </label>
               <input type="text" name="type" onChange={handleChange} />
               <button onClick={gettingWords}>Get words</button>
-          
-          </div>
-          <div className="col ">
-            <button onClick={handleSelectAllClick}> See All Words </button>
+            </div>
+            <div className="col ">
+              <button onClick={handleSelectAllClick}> See All Words </button>
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        {seeAll
-          ? words.map((e) => (
-              <div
-                key={e.id}
-                className="flashcards"
-                onClick={() => handleWordCards(e.id)}
-              >
-                <ul style={{ listStyle: "none" }}>
+      ) : (
+          <div>
+        <div>
+          {seeAll || seeType
+            ? words.map((e) => (
+                <div
+                  key={e.id}
+                  className="flashcards"
+                >
+                  <ul style={{ listStyle: "none" }}>
                   <li>
-                    {e.word}
-                    <button
-                      className="delete-button"
-                      onClick={() => deleteWord(e.id)}
-                    >
-                      Delete Word
-                    </button>
-                  </li>
-                </ul>
+                    <p  onClick={() => handleWordCards(e.id)}>
+
+                      {e.word}
+                    </p>
+                      <button
+                        className="delete-button"
+                        onClick={() => handleDelete(e.id)}
+                      >
+                        Delete Word
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              ))
+            : null}
+          </div>
+            <div>
+              <button onClick={handleChooseTypeAgain}> Look for another word type</button>
               </div>
-            ))
-          : null}
+          </div>
+      )}
+      <div>
+        {
+          wordCard ? <div> 
+            < Link to="/wordCard" />
+            <Routes>
+              <Route path="/wordCard" element={ < WordCard/>} />
+            </Routes>
+          </div>
+        : null }
       </div>
       <div>
         <div className="row">

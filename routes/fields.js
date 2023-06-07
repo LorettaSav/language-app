@@ -25,16 +25,16 @@ router.get("/:id", async function (req, res, next) {
   }
 });
 
-router.post("/", async function (req, res, next) {
-  const { fields } = req.body;
-  const fieldType = Object.keys(fields)
-  try {
-    for (let i = 0; i < fieldType.length; i++){
-      const myFields = await models.Field.create({ field: fieldType[i] });
-    }
-    //console.log(w);
-  } catch (error) {
-    res.status(500).send(error);
-  }
-});
+// router.post("/", async function (req, res, next) {
+//   const { fields } = req.body;
+//   const fieldType = Object.keys(fields)
+//   try {
+//     for (let i = 0; i < fieldType.length; i++){
+//       const myFields = await models.Field.create({ field: fieldType[i] });
+//     }
+//     //console.log(w);
+//   } catch (error) {
+//     res.status(500).send(error);
+//   }
+// });
 module.exports = router;

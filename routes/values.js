@@ -45,18 +45,29 @@ router.get("/:id/wordfields", async function (req, res, next) {
       }
 })
 
+router.get("/words/:id", async function (req, res, next) {
+  const { id } = req.params;
+  try {
+    const values = await models.Value.findAll({
+      where: { wordId : id },
+    })
+    res.send(values)
+  } catch (err) {
+    res.status(500).send({ message: err.message})
+  }
+})
 //POST values
-router.post("/", async function (req, res, next) {
-    const { value, wordId, fieldId } = req.body;
-    try {
-      await models.Value.findOne({
-        where: { value:value, wordId:wordId, fieldId: fieldId },
-      });
-      const values = await models.Value.create({ value, wordId, fieldId });
-      res.send(values);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  });
+// router.post("/", async function (req, res, next) {
+//     const { value, wordId, fieldId } = req.body;
+//     try {
+//       await models.Value.findOne({
+//         where: { value:value, wordId:wordId, fieldId: fieldId },
+//       });
+//       const values = await models.Value.create({ value, wordId, fieldId });
+//       res.send(values);
+//     } catch (error) {
+//       res.status(500).send(error);
+//     }
+//   });
 
 module.exports = router;

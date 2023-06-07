@@ -18,7 +18,6 @@ module.exports = {
           model: "Fields",
           key: "id"
         },
-        allowNull: false
       },
       wordId: {
         type: Sequelize.INTEGER,
@@ -26,7 +25,6 @@ module.exports = {
           model: "Words",
           key: "id"
         },
-        allowNull: false
       },
       createdAt: {
         allowNull: false,
